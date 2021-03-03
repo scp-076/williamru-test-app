@@ -1,9 +1,9 @@
 <template>
   <div class="selected-list">
-    <slot v-if="Object.keys(selected).length"></slot>
-    <span v-else>Пока ничего не выбрано</span>
-    <ul>
-      <li v-for="(elem, select, id) in selected" :key="id">Из селекта {{select}} выбраны значения: {{elem.join(',')}}</li>
+    <span v-show="isSelected">Selected:</span>
+    <span v-show="!isSelected">Пока ничего не выбрано</span>
+    <ul v-show="isSelected">
+      <li v-for="(elem, select, id) in selected" :key="id">Из селекта {{select}} выбраны значения: {{arrToString(elem)}}</li>
     </ul>
   </div>
 </template>
@@ -14,17 +14,25 @@ export default {
   props: {
     selected: Object,
   },
-  data() {
-    return {
-      list: this.selected,
-    }
+  computed: {
+    isSelected() {
+      for (let key in this.selected) {
+        if (this.selected[key].length) return true;
+      }
+      return false;
+    },
   },
+  methods: {
+    arrToString(arr) {
+      return arr.join(',');
+    },
+  }
 }
 </script>
 
 <style scoped lang="scss">
 .selected-list {
-  width: 50%;
+  width: 60%;
   margin: 50px auto 0;
 }
 

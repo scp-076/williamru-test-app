@@ -8,13 +8,14 @@
                    v-model="selected[key]"
                    :options="options[key]"
                    :key="id"
-                   @select="formPrevState($event, key)"
+                   @select="formPrevState"
+                   @remove="formPrevState"
                    class="select"
                    :multiple="true"
                    :close-on-select="false"
                    :searchable="false"
       />
-      <Selected-list :selected="selected">Selected:</Selected-list>
+      <Selected-list :selected="selected"></Selected-list>
     </div>
     <div class="btns">
       <button @click="returnPrevState" :disabled="!this.previouslySelected.length">Отменить последнее действие</button>
@@ -67,7 +68,7 @@ export default {
             break;
         }
       }
-      formSelectOptions(this, subStr, subNum, subObj);
+      formSelectOptions(this, [subStr, subNum, subObj], ['str', 'num', 'obj']);
     },
     formPrevState() {
       this.previouslySelected.push(Object.assign({}, this.selected));

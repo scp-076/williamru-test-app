@@ -13,8 +13,8 @@ function formatSelectOptions(optionsArr) {
     return formattedOptions;
 }
 
-export function formSelectOptions(thisArg, strArr, numArr, objArr) {
-    strArr.length ? thisArg.options.str = formatSelectOptions(strArr) : null;
-    numArr.length ? thisArg.options.num = formatSelectOptions(numArr) : null;
-    objArr.length ? thisArg.options.obj = formatSelectOptions(objArr) : null;
+export function formSelectOptions(thisArg, selectArrays, optionsNames) {
+    for (let i = 0; i < selectArrays.length; i++) {
+        selectArrays[i].length ? thisArg.options[optionsNames[i]] = formatSelectOptions(selectArrays[i]) : null;
+    }
 }
